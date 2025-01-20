@@ -135,7 +135,7 @@
   <script>
     async function fetchGames() {
       try {
-        const response = await fetch('/games.json');
+        const response = await fetch('/pages/games.json');
         if (!response.ok) throw new Error('Failed to fetch game data');
         return await response.json();
       } catch (error) {
