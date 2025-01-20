@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/orbitron" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .iframe-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 75vw;
+      height: 75vh;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .fullscreen-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .iframe-button {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.6);
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .iframe-button:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+    .iframe-button i {
+      color: white;
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-bg-base-100 text-gray-500">
+  <nav class="navbar bg-base-100 shadow-lg sticky top-0 z-10">
+    <div class="container mx-auto flex justify-between items-center">
+      <div class="navbar-start">
+        <h1 class="text-primary font-orbitron">Void Games</h1>
+      </div>
+      <div class="navbar-center hidden sm:flex">
+        <ul class="menu menu-horizontal gap-4">
+          <li><a href="" class="btn btn-outline border-2 btn-primary">Home</a></li>
+          <li><a href="/pages/games.html" class="btn btn-outline border-2 btn-secondary">Games</a></li>
+          <li><a href="apps.html" class="btn btn-outline border-2 btn-accent">Apps</a></li>
+        </ul>
+      </div>
+      <div class="navbar-end flex items-center gap-4">
+        <a href="/proxy.html" class="btn btn-primary flex items-center gap-2">
+          <i class="fa-solid fa-search"></i>
+        </a>
+        <div class="dropdown dropdown-end sm:hidden">
+          <button tabindex="0" class="btn btn-ghost">
+            <i class="fa-solid fa-bars text-xl"></i>
+          </button>
+          <ul tabindex="0" class="dropdown-content menu bg-base-200 p-4 rounded-box shadow w-40 gap-2">
+            <li><a href="/pages/games.html">Games</a></li>
+            <li><a href="/pages/index.html">Home</a></li>
+            <li><a href="apps.html">Apps</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="iframe-container">
+    <iframe 
+      id="gameIframe" 
+      class="fullscreen-iframe" 
+      src="" 
+      frameborder="0" 
+      scrolling="no">
+    </iframe>
+    <div class="iframe-button">
+      <i class="fa-solid fa-expand"></i>
+    </div>
+  </div>
+
+  <!-- Game Buttons Container -->
+  <div id="game-buttons-container" class="p-4"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('game-buttons-container');
+      const iframeButton = document.querySelector('.iframe-button');
+      let gameData = [];
+
+      // Fetch game data
+      fetch('/pages/games.json')
+        .then(response => {
+          if (!response.ok) throw new Error('Failed to fetch games data');
+          return response.json();
+        })
+        .then(data => {
+          gameData = data.gameButtons || [];
+          renderGames(gameData);
+        })
+        .catch(error => {
+          console.error('Error loading game buttons:', error);
+          container.innerHTML = '<p class="text-red-500">Failed to load games. Please try again later.</p>';
+        });
+
+      // Render games
+      function renderGames(games) {
+        container.innerHTML = '';
+        if (games.length === 0) {
+          container.innerHTML = '<p class="text-gray-500">No games found.</p>';
+          return;
+        }
+
+        const gridContainer = document.createElement('div');
+        gridContainer.className = 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4';
+
+        games.forEach(game => {
+          const gameButton = document.createElement('a');
+          gameButton.href = game.link;
+          gameButton.className =
+            'relative block w-full aspect-square bg-base-200 rounded overflow-hidden shadow-lg transition-transform hover:scale-105';
+
+          const img = document.createElement('div');
+          img.style.backgroundImage = `url(${game.image})`;
+          img.style.backgroundSize = 'cover';
+          img.style.backgroundPosition = 'center';
+          img.className = 'absolute inset-0 w-full h-full';
+
+          const title = document.createElement('div');
+          title.className =
+            'absolute bottom-0 w-full bg-black bg-opacity-75 text-white text-center py-2';
+          title.textContent = game.text;
+
+          gameButton.appendChild(img);
+          gameButton.appendChild(title);
+          gridContainer.appendChild(gameButton);
+        });
+
+        container.appendChild(gridContainer);
+      }
+
+      // Toggle fullscreen
+      iframeButton.addEventListener('click', () => {
+        const iframe = document.getElementById('gameIframe');
+        if (iframe.requestFullscreen) {
+          iframe.requestFullscreen();
+        } else {
+          alert('Fullscreen is not supported in your browser.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
