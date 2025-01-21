@@ -63,7 +63,6 @@
 <div class="content p-6" id="game-buttons-container">
   <!-- Game buttons will be rendered here -->
 </div>
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('game-buttons-container');
@@ -102,12 +101,12 @@
   
         const gridContainer = document.createElement('div');
         gridContainer.className = 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4';
-  
+
         games.forEach(game => {
           const gameButton = document.createElement('a');
           gameButton.href = game.link;
           gameButton.className =
-            'relative block w-full aspect-[1/1] bg-base-200 rounded overflow-hidden shadow-lg transition-transform hover:scale-105';
+            'relative block w-full h-40 md:h-48 lg:h-56 bg-base-200 rounded overflow-hidden shadow-lg transition-transform hover:scale-105';
 
           const img = document.createElement('div');
           img.style.backgroundImage = `url(${game.image})`;
