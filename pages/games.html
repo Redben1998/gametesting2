@@ -89,13 +89,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const gridContainer = document.createElement('div');
     gridContainer.className = 'grid gap-6';
-    gridContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(200px, 1fr))';
+    gridContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(220px, 1fr))';
 
     games.forEach(game => {
       const gameButton = document.createElement('a');
       gameButton.href = game.link;
       gameButton.className =
-        'relative block w-full h-48 bg-base-200 rounded overflow-hidden shadow-md transition-transform hover:scale-105';
+        'relative block w-full h-52 bg-base-200 rounded overflow-hidden shadow-md transition-transform hover:scale-105';
 
       const img = document.createElement('div');
       img.style.backgroundImage = `url(${game.image})`;
