@@ -1,15 +1,22 @@
-  AOS.init();
-
-  // Check localStorage for theme preference
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme) {
-    document.getElementById('theme-body').setAttribute('data-theme', savedTheme);
-    document.getElementById('theme-toggle').checked = savedTheme === 'dark';
+  // Function to set the theme
+  function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
   }
 
-  // Toggle theme and save it to localStorage
-  document.getElementById('theme-toggle').addEventListener('change', function () {
-    const newTheme = this.checked ? 'dark' : 'light';
-    document.getElementById('theme-body').setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
+  // Function to toggle the theme
+  function toggleTheme() {
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+  }
+
+  // Apply the saved theme on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+    document.querySelector('.theme-controller').checked = savedTheme === 'dark';
   });
+
+  // Add event listener to the theme toggle
+  document.querySelector('.theme-controller').addEventListener('change', toggleTheme);
