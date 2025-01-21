@@ -145,10 +145,10 @@
       "image": "/pages/games/2drocketleague/unnamed.png"
     },
     {
-      "text": "Moto X3M",
-      "link": "/pages/game_page.html?game=Moto%20X3M",
-      "link2": "/pages/games/MotoX3M.html",
-      "image": "/img/motox3m.webp"
+      "text": "Moto1",
+      "link": "/pages/game_page.html?game=Moto1",
+      "link2": "/pages/games/Moto1.html",
+      "image": "/img/Moto1.webp"
     },
     {
       "text": "Moto X3M Pool",
@@ -163,10 +163,10 @@
       "image": "/img/moto-spook.webp"
     },
     {
-      "text": "Moto X3M Winter",
-      "link": "/pages/game_page.html?game=Moto%20X3M%20Winter",
-      "link2": "/pages/games/motox3mw.html",
-      "image": "/img/motox3mw.webp"
+      "text": "MotoW",
+      "link": "/pages/game_page.html?game=MotoW",
+      "link2": "/pages/games/MotoW.html",
+      "image": "/img/MotoW.webp"
     },
     {
       "text": "Clicker Heroes",
