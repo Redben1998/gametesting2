@@ -4,31 +4,23 @@
     localStorage.setItem('theme', theme);
   }
 
-  // Function to get the current theme
-  function getTheme() {
-    return document.documentElement.getAttribute('data-theme');
+  // Function to toggle the theme
+  function toggleTheme() {
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    const newTheme = currentTheme === 'light' ? 'synthwave' : 'light';
+    setTheme(newTheme);
+    document.querySelector('.theme-controller').checked = newTheme === 'synthwave';
   }
 
   // Apply the saved theme on page load
   document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.querySelector('.theme-controller').checked = savedTheme === 'synthwave';
-    }
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+    document.querySelector('.theme-controller').checked = savedTheme === 'synthwave';
   });
 
-  // Watch for theme changes
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.attributeName === 'data-theme') {
-        const currentTheme = getTheme();
-        localStorage.setItem('theme', currentTheme);
-      }
-    });
-  });
-
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  // Add event listener to the theme toggle
+  document.querySelector('.theme-controller').addEventListener('change', toggleTheme);
 
   // Apply the saved theme immediately to prevent flashing
   const savedTheme = localStorage.getItem('theme');
