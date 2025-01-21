@@ -1,4 +1,5 @@
-
+<script>
+  // Check for saved theme preference on page load
   window.addEventListener('load', () => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
@@ -18,11 +19,17 @@
     }
   });
 
+  // Save or remove theme preference to localStorage when the user toggles it
   const themeToggle = document.querySelector('.theme-controller');
   themeToggle.addEventListener('change', () => {
-    const selectedTheme = themeToggle.checked ? 'synthwave' : 'light';
-    // Save to localStorage
-    localStorage.setItem('theme', selectedTheme);
-    // Apply the selected theme
-    document.documentElement.setAttribute('data-theme', selectedTheme);
+    if (themeToggle.checked) {
+      // If checked, save the 'synthwave' theme
+      localStorage.setItem('theme', 'synthwave');
+      document.documentElement.setAttribute('data-theme', 'synthwave');
+    } else {
+      // If unchecked, remove the theme from localStorage and reset to default
+      localStorage.removeItem('theme');
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
   });
+</script>
