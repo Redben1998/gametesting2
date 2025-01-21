@@ -1,5 +1,4 @@
-<script>
-  // Check for saved theme preference on page load
+
   window.addEventListener('load', () => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
@@ -19,7 +18,6 @@
     }
   });
 
-  // Save or remove theme preference to localStorage when the user toggles it
   const themeToggle = document.querySelector('.theme-controller');
   themeToggle.addEventListener('change', () => {
     if (themeToggle.checked) {
@@ -32,4 +30,3 @@
       document.documentElement.setAttribute('data-theme', 'light');
     }
   });
-</script>
